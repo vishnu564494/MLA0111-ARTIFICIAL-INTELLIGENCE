@@ -46,5 +46,24 @@ def water_jug(cap1, cap2, goal):
         q.append((x, 0))      
         q.append((x - min(x, cap2-y), y + min(x, cap2-y)))  
         q.append((x + min(y, cap1-x), y - min(y, cap1-x)))  
-            
+
+def ucs(graph, start, goal):
+    visited = set()
+    pq = [(0, start)]   # (cost, node)
+
+    while pq:
+        cost, node = heapq.heappop(pq)
+
+        if node == goal:
+            print("Cost:", cost)
+            return
+
+        if node in visited:
+            continue
+        visited.add(node)
+
+        for neighbor, weight in graph[node]:
+            if neighbor not in visited:
+                heapq.heappush(pq, (cost + weight, neighbor))
+
                 
