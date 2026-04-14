@@ -66,4 +66,25 @@ def ucs(graph, start, goal):
             if neighbor not in visited:
                 heapq.heappush(pq, (cost + weight, neighbor))
 
+import heapq
+
+def astar(graph, h, start, goal):
+    pq = [(0, start)]
+    g = {start: 0}
+
+    while pq:
+        f, node = heapq.heappop(pq)
+
+        if node == goal:
+            print("Cost:", g[node])
+            return
+
+        for neigh, cost in graph[node]:
+            new_g = g[node] + cost
+
+            if neigh not in g or new_g < g[neigh]:
+                g[neigh] = new_g
+                f = new_g + h[neigh]
+                heapq.heappush(pq, (f, neigh))
+
                 
